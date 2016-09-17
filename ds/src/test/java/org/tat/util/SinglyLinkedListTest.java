@@ -143,5 +143,33 @@ public class SinglyLinkedListTest {
 	public void testRemoveAtIndexExpInfi() {
 		Node node = singlyLinkedList.removeAtIndex(10);
 	}
+	
+	//Find the length of the linked in a iterative way
+	@Test
+	public void testSizeIterative(){
+		Node temp = singlyLinkedList.getHead();
+		int i = 1;
+		while(temp.getNextNode() != null){
+			temp = temp.getNextNode();
+			i++;
+		}
+		Assert.assertEquals(singlyLinkedList.size(), i);	
+	}
+	
+	@Test
+	public void testSizeRecursive(){
+		Node temp = singlyLinkedList.getHead();
+		Assert.assertEquals(singlyLinkedList.size(), calculateSize(temp));
+	}
+	
+	private int calculateSize(Node node){
+		int i = 1;
+		if(node.getNextNode() == null){
+			return i;
+		}
+		i = calculateSize(node.getNextNode());
+		i++;
+		return i;
+	}
 
 }
