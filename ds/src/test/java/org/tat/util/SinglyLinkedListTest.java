@@ -156,6 +156,7 @@ public class SinglyLinkedListTest {
 		Assert.assertEquals(singlyLinkedList.size(), i);	
 	}
 	
+	//Find the length of the linked in a recursive way
 	@Test
 	public void testSizeRecursive(){
 		Node temp = singlyLinkedList.getHead();
@@ -170,6 +171,38 @@ public class SinglyLinkedListTest {
 		i = calculateSize(node.getNextNode());
 		i++;
 		return i;
+	}
+	
+	//Find the length of the linked in a iterative way
+	@Test
+	public void testSearchIterative(){
+		int findValue = 3;
+		boolean result = false;
+		Node temp = singlyLinkedList.getHead();
+		while(temp.getNextNode() != null){
+			if((int)temp.getData() == findValue){
+				result = true;
+				break;
+			}
+			temp = temp.getNextNode();
+		}
+		Assert.assertTrue(result);	
+	}
+	
+	//Find the length of the linked in a recursive way
+	@Test
+	public void testSearchRecursive(){
+		Node temp = singlyLinkedList.getHead();
+		Assert.assertTrue(searchRecursive(temp, 3));
+	}
+	
+	private boolean searchRecursive(Node node, int value){
+		if(node.getNextNode() == null){
+			return false;
+		}
+		if((int)node.getData() == value)
+			return true;
+		return searchRecursive(node.getNextNode(), value);
 	}
 
 }
