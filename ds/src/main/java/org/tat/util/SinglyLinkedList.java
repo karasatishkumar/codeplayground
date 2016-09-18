@@ -143,4 +143,43 @@ public class SinglyLinkedList<T extends Object> {
 		return sb.toString();
 	}
 	
+	public boolean swapNode(T x, T y) {
+		Node temp = head;
+		Node xNode = null, yNode = null, prev = null, xPrev = null, yPrev = null;
+		if (temp == null) {
+			throw new RuntimeException("Invalid Linked List");
+		} else if (temp.getNextNode() == null) {
+			throw new RuntimeException("Only one node in linked list");
+		} else {
+			while (temp != null) {
+				if (((T)temp.getData()).equals(x)) {
+					xNode = temp;
+					xPrev = prev;
+				} else if (((T)temp.getData()).equals(y)) {
+					yNode = temp;
+					yPrev = prev;
+				}
+				prev = temp;
+				temp = temp.getNextNode();
+			}
+
+			if (xNode == null || yNode == null) {
+				throw new RuntimeException("no match found to swap");
+			} else {
+				if (xPrev != null)
+					xPrev.setNextNode(yNode);
+				else
+					head = yNode;
+				if (yPrev != null)
+					yPrev.setNextNode(xNode);
+				else
+					head = xNode;
+				Node tmp = xNode.getNextNode();
+				xNode.setNextNode(yNode.getNextNode());
+				yNode.setNextNode(tmp);
+				return true;
+			}
+		}
+	}
+	
 }

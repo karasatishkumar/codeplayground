@@ -1,14 +1,14 @@
 package org.tat.util;
 
-public class Node {
-	private Object data;
+public class Node<T extends Object> {
+	private T data;
 	private Node nextNode;
 	
-	public Node(Object data) {
+	public Node(T data) {
 		this.data = data;
 	}
 	
-	public Object getData(){
+	public T getData(){
 		return this.data;
 	}
 	
