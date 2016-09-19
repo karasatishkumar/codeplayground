@@ -34,7 +34,9 @@ public class Stack<T extends Object> {
 		if(top == -1){
 			throw new RuntimeException("Stack is empty");
 		}else{
-			return (T)store[top--];
+			T t = (T)store[top];
+			store[top--] = null;
+			return t;
 		}
 	}
 	
