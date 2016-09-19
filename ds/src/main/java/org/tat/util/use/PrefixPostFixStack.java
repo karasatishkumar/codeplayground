@@ -9,61 +9,66 @@ public class PrefixPostFixStack {
 		StringBuffer sf = new StringBuffer();
 		for (int i = 0; i < input.length(); i++) {
 			// if input[i] is a operand append to string builder
-			
+
 			// if input[i] is operator peek the stack and check for oprator
 			// precedence
 			// if peek operator is of higher precedence the pop.. do it until
 			// you find a pranthesis or operator of lower precedence
 			// else push to the stact
-			
+
 			// if input is open paranthesis push the stact
-			// if input is the close then pop till you find a close 
-			
-			if(isOperand(input.charAt(i))){
+			// if input is the close then pop till you find a close
+
+			if (isOperand(input.charAt(i))) {
 				sf.append(input.charAt(i));
-			}else if(isOperator(input.charAt(i))){
-				if(stack.getTop() > -1){
-					while(isOperator(stack.peek()) && operatorPrecedence(stack.peek()) > operatorPrecedence(input.charAt(i))){
+			} else if (isOperator(input.charAt(i))) {
+				if (stack.getTop() > -1) {
+					while (isOperator(stack.peek())
+							&& operatorPrecedence(stack.peek()) > operatorPrecedence(input
+									.charAt(i))) {
 						sf.append(stack.pop());
 					}
 				}
-				
+
 				stack.push(input.charAt(i));
-			}else if(isOpenParanthesis(input.charAt(i))){
+			} else if (isOpenParanthesis(input.charAt(i))) {
 				stack.push(input.charAt(i));
-			}else if(isCloseParanthesis(input.charAt(i))){
-				while(!stack.peek().equals(findMachingParanthesis(input.charAt(i)))){
+			} else if (isCloseParanthesis(input.charAt(i))) {
+				while (!stack.peek().equals(
+						findMachingParanthesis(input.charAt(i)))) {
 					sf.append(stack.pop());
 				}
 				stack.pop();
 			}
 		}
-		while(stack.getTop() > -1){
+		while (stack.getTop() > -1) {
 			sf.append(stack.pop());
 		}
 		return sf.toString();
 	}
 
 	private boolean isOperand(Character input) {
-		if((input >= 'a' && input <= 'z') || (input >= 'A' && input <= 'Z') || (input >= '0' && input <= '9'))
+		if ((input >= 'a' && input <= 'z') || (input >= 'A' && input <= 'Z')
+				|| (input >= '0' && input <= '9'))
 			return true;
 		return false;
 	}
 
 	private boolean isOperator(Character input) {
-		if(input == '+' || input == '-' || input == '*' || input == '/' || input == '^')
+		if (input == '+' || input == '-' || input == '*' || input == '/'
+				|| input == '^')
 			return true;
 		return false;
 	}
-	
-	private boolean isOpenParanthesis(Character input){
-		if(input == '(' || input == '{' || input == '[')
+
+	private boolean isOpenParanthesis(Character input) {
+		if (input == '(' || input == '{' || input == '[')
 			return true;
 		return false;
 	}
-	
-	private boolean isCloseParanthesis(Character input){
-		if(input == ')' || input == '}' || input == ']')
+
+	private boolean isCloseParanthesis(Character input) {
+		if (input == ')' || input == '}' || input == ']')
 			return true;
 		return false;
 	}
