@@ -1,9 +1,5 @@
 package org.tat.util;
 
-import static org.junit.Assert.*;
-
-import java.util.LinkedList;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -248,5 +244,19 @@ public class SinglyLinkedListTest {
 	public void testSwapNodeNoMatch() {
 		boolean x = singlyLinkedList.swapNode(0, 5);
 	}
-
+	
+	@Test
+	public void testGet(){
+		Assert.assertEquals(0, singlyLinkedList.get(0).getData().intValue());
+		Assert.assertEquals(4, singlyLinkedList.get(4).getData().intValue());
+		Assert.assertEquals(2, singlyLinkedList.get(2).getData().intValue());
+	}
+	
+	@Test
+	public void testFindMiddle(){
+		Assert.assertEquals(2, singlyLinkedList.findMiddle().getData().intValue());
+		Node node = new Node(5);
+		singlyLinkedList.insertAtEnd(node);
+		Assert.assertEquals(3, singlyLinkedList.findMiddle().getData().intValue());
+	}
 }

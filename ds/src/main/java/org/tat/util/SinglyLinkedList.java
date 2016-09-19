@@ -39,8 +39,9 @@ public class SinglyLinkedList<T extends Object> {
 			this.head = node;
 		else {
 			Node temp = this.head;
-			while (temp.getNextNode() != null) temp = temp.getNextNode();
-				temp.setNextNode(node);
+			while (temp.getNextNode() != null)
+				temp = temp.getNextNode();
+			temp.setNextNode(node);
 		}
 		size++;
 	}
@@ -56,7 +57,7 @@ public class SinglyLinkedList<T extends Object> {
 			this.insertAtEnd(node);
 		} else {
 			Node temp = this.head;
-			for (int i = 0; i < index-1; i++) {
+			for (int i = 0; i < index - 1; i++) {
 				temp = temp.getNextNode();
 			}
 			node.setNextNode(temp.getNextNode());
@@ -103,7 +104,7 @@ public class SinglyLinkedList<T extends Object> {
 			return this.removeAtEnd();
 		} else {
 			Node temp = this.head, prev = null;
-			for (int i = 0; i < index-1; i++) {
+			for (int i = 0; i < index - 1; i++) {
 				prev = temp;
 				temp = temp.getNextNode();
 			}
@@ -142,7 +143,7 @@ public class SinglyLinkedList<T extends Object> {
 		sb.append(temp.getData().toString() + "]");
 		return sb.toString();
 	}
-	
+
 	public boolean swapNode(T x, T y) {
 		Node temp = head;
 		Node xNode = null, yNode = null, prev = null, xPrev = null, yPrev = null;
@@ -152,10 +153,10 @@ public class SinglyLinkedList<T extends Object> {
 			throw new RuntimeException("Only one node in linked list");
 		} else {
 			while (temp != null) {
-				if (((T)temp.getData()).equals(x)) {
+				if (((T) temp.getData()).equals(x)) {
 					xNode = temp;
 					xPrev = prev;
-				} else if (((T)temp.getData()).equals(y)) {
+				} else if (((T) temp.getData()).equals(y)) {
 					yNode = temp;
 					yPrev = prev;
 				}
@@ -181,5 +182,31 @@ public class SinglyLinkedList<T extends Object> {
 			}
 		}
 	}
-	
+
+	public Node<T> get(int i) {
+		Node<T> temp = head;
+		int index = 0;
+		while (temp.getNextNode() != null && index < i) {
+			temp = temp.getNextNode();
+			index++;
+		}
+		return temp;
+	}
+
+	/**
+	 * Traverse linked list using two pointers. Move one pointer by one and
+	 * other pointer by two. When the fast pointer reaches end slow pointer will
+	 * reach middle of the linked list.
+	 * 
+	 * @return
+	 */
+	public Node<T> findMiddle() {
+		Node<T> fast = head;
+		Node<T> slow = head;
+		while (fast != null && fast.getNextNode() != null) {
+			slow = slow.getNextNode();
+			fast = fast.getNextNode().getNextNode();
+		}
+		return slow;
+	}
 }
