@@ -31,5 +31,12 @@ public class PrefixPostFixStackTest {
 		output = pPFS.inFixToPostFix("A2 + B1 * C3", " ");
 		Assert.assertEquals("A2 B1 C3 * +", output);
 	}
+	
+	@Test
+	public void testPreFixToPreFix() {
+
+		String output = pPFS.inFixToPreFix("A + ( B * C )", " ");
+		Assert.assertEquals("+ A * B C", output);
+	}
 
 }

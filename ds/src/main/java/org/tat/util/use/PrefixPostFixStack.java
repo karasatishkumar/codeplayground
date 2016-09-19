@@ -12,7 +12,6 @@ public class PrefixPostFixStack {
 		Stack<String> stack = new Stack<String>(input.length());
 		StringBuffer sf = new StringBuffer();
 		StringTokenizer st = new StringTokenizer(input, delemeter);
-		// for (int i = 0; i < input.length(); i++) {
 		String token = null;
 		while (st.hasMoreTokens()) {
 			token = st.nextToken();
@@ -32,7 +31,7 @@ public class PrefixPostFixStack {
 			} else if (isOperator(token)) {
 				if (stack.getTop() > -1) {
 					while (isOperator(stack.peek())
-							&& operatorPrecedence(stack.peek()) > operatorPrecedence(token)) {
+							&& operatorPrecedence(stack.peek()) >= operatorPrecedence(token)) {
 						sf.append(stack.pop()).append(delemeter);
 					}
 				}
@@ -51,6 +50,31 @@ public class PrefixPostFixStack {
 			sf.append(stack.pop()).append(delemeter);
 		}
 		return sf.toString().substring(0, sf.length() - 1);
+	}
+
+	public String inFixToPreFix(String input, String delemeter) {
+		// Reverse the expression
+		// change all ) -> ( and ( -> )
+		// apply infix -> postfix
+		// reverse
+		input = new StringBuffer(input).reverse().toString();
+		StringTokenizer st = new StringTokenizer(input, delemeter);
+		String token = null;
+		StringBuffer sb = new StringBuffer();
+		while (st.hasMoreTokens()) {
+			token = st.nextToken();
+			if(isOpenParanthesis(token)){
+				sb.append(findMachingParanthesis(token)).append(delemeter);
+			}else if(isCloseParanthesis(token)){
+				sb.append(findMachingParanthesis(token)).append(delemeter);
+			}else{
+				sb.append(token).append(delemeter);
+			}
+		}
+		
+		input = this.inFixToPostFix(sb.substring(0, sb.length()-1), delemeter);
+		return  new StringBuffer(input).reverse().toString();
+
 	}
 
 	private boolean isOperand(String input) {
@@ -104,12 +128,21 @@ public class PrefixPostFixStack {
 		case "]":
 			output = "[";
 			break;
+		case "[":
+			output = "]";
+			break;	
 		case "}":
 			output = "{";
 			break;
+		case "{":
+			output = "}";
+			break;	
 		case ")":
 			output = "(";
 			break;
+		case "(":
+			output = ")";
+			break;	
 		default:
 			throw new RuntimeException("Invalid Paranthesis : " + input);
 		}
