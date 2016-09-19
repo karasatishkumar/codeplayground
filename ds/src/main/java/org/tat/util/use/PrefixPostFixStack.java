@@ -1,13 +1,10 @@
 package org.tat.util.use;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.tat.util.Stack;
 
 public class PrefixPostFixStack {
 
-	public String preFixToPostFix(String input) {
+	public String inFixToPostFix(String input) {
 		Stack<Character> stack = new Stack<Character>(input.length());
 		StringBuffer sf = new StringBuffer();
 		for (int i = 0; i < input.length(); i++) {
@@ -26,11 +23,19 @@ public class PrefixPostFixStack {
 				sf.append(input.charAt(i));
 			}else if(isOperator(input.charAt(i))){
 				if(stack.getTop() > -1){
-					while(operatorPrecedence(stack.peek()) > operatorPrecedence(input.charAt(i))){
+					while(isOperator(stack.peek()) && operatorPrecedence(stack.peek()) > operatorPrecedence(input.charAt(i))){
 						sf.append(stack.pop());
 					}
 				}
+				
 				stack.push(input.charAt(i));
+			}else if(isOpenParanthesis(input.charAt(i))){
+				stack.push(input.charAt(i));
+			}else if(isCloseParanthesis(input.charAt(i))){
+				while(!stack.peek().equals(findMachingParanthesis(input.charAt(i)))){
+					sf.append(stack.pop());
+				}
+				stack.pop();
 			}
 		}
 		while(stack.getTop() > -1){
@@ -40,7 +45,7 @@ public class PrefixPostFixStack {
 	}
 
 	private boolean isOperand(Character input) {
-		if((input >= 'a' && input <= 'z') || (input >= 'A' && input <= 'Z'))
+		if((input >= 'a' && input <= 'z') || (input >= 'A' && input <= 'Z') || (input >= '0' && input <= '9'))
 			return true;
 		return false;
 	}
@@ -53,6 +58,12 @@ public class PrefixPostFixStack {
 	
 	private boolean isOpenParanthesis(Character input){
 		if(input == '(' || input == '{' || input == '[')
+			return true;
+		return false;
+	}
+	
+	private boolean isCloseParanthesis(Character input){
+		if(input == ')' || input == '}' || input == ']')
 			return true;
 		return false;
 	}
@@ -72,7 +83,7 @@ public class PrefixPostFixStack {
 			output = 3;
 			break;
 		default:
-			throw new RuntimeException("Invalid Operator");
+			throw new RuntimeException("Invalid Operator : " + input);
 		}
 		return output;
 	}
@@ -90,7 +101,7 @@ public class PrefixPostFixStack {
 			output = '(';
 			break;
 		default:
-			throw new RuntimeException("Invalid Paranthesis");
+			throw new RuntimeException("Invalid Paranthesis : " + input);
 		}
 		return output;
 	}

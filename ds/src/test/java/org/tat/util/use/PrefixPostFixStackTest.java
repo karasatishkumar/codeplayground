@@ -20,8 +20,14 @@ public class PrefixPostFixStackTest {
 	@Test
 	public void testPreFixToPostFix() {
 		
-		String output = pPFS.preFixToPostFix("A+B*C"); //A+(B*C) -> A+(BC*) -> A(BC*)+ -> ABC*+
+		String output = pPFS.inFixToPostFix("A+B*C");
 		Assert.assertEquals("ABC*+", output);
+		output = pPFS.inFixToPostFix("3*(2+5)");
+		Assert.assertEquals("325+*", output);
+		output = pPFS.inFixToPostFix("[[{{A*(B+C)}-D}+E]*F]");
+		Assert.assertEquals("ABC+*D–E+F*", output);
+		output = pPFS.inFixToPostFix("((((1*(2+3))-3)+4)*5)");
+		Assert.assertEquals("123+*3–4+5*", output);
 	}
 
 }
