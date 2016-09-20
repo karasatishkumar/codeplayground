@@ -15,17 +15,6 @@ public class PrefixPostFixStack {
 		String token = null;
 		while (st.hasMoreTokens()) {
 			token = st.nextToken();
-			// if input[i] is a operand append to string builder
-
-			// if input[i] is operator peek the stack and check for oprator
-			// precedence
-			// if peek operator is of higher precedence the pop.. do it until
-			// you find a pranthesis or operator of lower precedence
-			// else push to the stact
-
-			// if input is open paranthesis push the stact
-			// if input is the close then pop till you find a close
-
 			if (isOperand(token)) {
 				sf.append(token).append(delemeter);
 			} else if (isOperator(token)) {
@@ -53,27 +42,24 @@ public class PrefixPostFixStack {
 	}
 
 	public String inFixToPreFix(String input, String delemeter) {
-		// Reverse the expression
-		// change all ) -> ( and ( -> )
-		// apply infix -> postfix
-		// reverse
 		input = new StringBuffer(input).reverse().toString();
 		StringTokenizer st = new StringTokenizer(input, delemeter);
 		String token = null;
 		StringBuffer sb = new StringBuffer();
 		while (st.hasMoreTokens()) {
 			token = st.nextToken();
-			if(isOpenParanthesis(token)){
+			if (isOpenParanthesis(token)) {
 				sb.append(findMachingParanthesis(token)).append(delemeter);
-			}else if(isCloseParanthesis(token)){
+			} else if (isCloseParanthesis(token)) {
 				sb.append(findMachingParanthesis(token)).append(delemeter);
-			}else{
+			} else {
 				sb.append(token).append(delemeter);
 			}
 		}
-		
-		input = this.inFixToPostFix(sb.substring(0, sb.length()-1), delemeter);
-		return  new StringBuffer(input).reverse().toString();
+
+		input = this
+				.inFixToPostFix(sb.substring(0, sb.length() - 1), delemeter);
+		return new StringBuffer(input).reverse().toString();
 
 	}
 
@@ -130,19 +116,19 @@ public class PrefixPostFixStack {
 			break;
 		case "[":
 			output = "]";
-			break;	
+			break;
 		case "}":
 			output = "{";
 			break;
 		case "{":
 			output = "}";
-			break;	
+			break;
 		case ")":
 			output = "(";
 			break;
 		case "(":
 			output = ")";
-			break;	
+			break;
 		default:
 			throw new RuntimeException("Invalid Paranthesis : " + input);
 		}
