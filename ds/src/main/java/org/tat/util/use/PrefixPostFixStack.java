@@ -4,6 +4,10 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import org.tat.util.Stack;
 
 public class PrefixPostFixStack {
@@ -61,6 +65,50 @@ public class PrefixPostFixStack {
 				.inFixToPostFix(sb.substring(0, sb.length() - 1), delemeter);
 		return new StringBuffer(input).reverse().toString();
 
+	}
+	
+	public String evalPostFix(String input, String delemeter){
+		Stack<String> stack = new Stack<String>(input.length());
+		StringBuffer sf = null;
+		StringTokenizer st = new StringTokenizer(input, delemeter);
+		String token = null;
+		String operand1, operand2;
+		while (st.hasMoreTokens()) {
+			token = st.nextToken();
+			if(isOperand(token)){
+				stack.push(token);
+			}else{
+				sf = new StringBuffer();
+				operand2 = stack.pop();
+				operand1 = stack.pop();
+				sf.append(operand1);
+				sf.append(token);
+				sf.append(operand2);
+				stack.push(evaluateExpression(sf.toString())+"");
+			}
+		}
+		return stack.pop();
+	}
+	
+	public String evalPreFix(String input, String delemeter){
+		Stack<String> stack = new Stack<String>(input.length());
+		StringBuffer sf = new StringBuffer(input);
+		input = sf.reverse().toString();
+		StringTokenizer st = new StringTokenizer(input, delemeter);
+		String token = null;
+		while (st.hasMoreTokens()) {
+			token = st.nextToken();
+			if(isOperand(token)){
+				stack.push(token);
+			}else{
+				sf = new StringBuffer();
+				sf.append(stack.pop());
+				sf.append(token);
+				sf.append(stack.pop());
+				stack.push(evaluateExpression(sf.toString())+"");
+			}
+		}
+		return stack.pop();
 	}
 
 	private boolean isOperand(String input) {
@@ -133,5 +181,17 @@ public class PrefixPostFixStack {
 			throw new RuntimeException("Invalid Paranthesis : " + input);
 		}
 		return output;
+	}
+	
+	private int evaluateExpression(String input){
+		ScriptEngineManager mgr = new ScriptEngineManager();
+	    ScriptEngine engine = mgr.getEngineByName("JavaScript");
+	    try {
+			return ((Double)engine.eval(input)).intValue();
+		} catch (ScriptException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }
