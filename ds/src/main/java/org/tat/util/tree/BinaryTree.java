@@ -62,5 +62,15 @@ public class BinaryTree<T extends Object> {
 	public void setRoot(Node<T> root) {
 		this.root = root;
 	}
-
+	
+	public int height(Node<T> root){
+		if(root == null)
+			return 0;
+		int lheight = height(root.getLeft());
+		int rheight = height(root.getRight());
+		if(lheight > rheight)
+			return lheight+1;
+		else
+			return rheight+1;
+	}
 }

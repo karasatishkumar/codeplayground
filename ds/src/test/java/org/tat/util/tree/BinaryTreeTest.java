@@ -38,5 +38,10 @@ public class BinaryTreeTest {
 	public void testPostOrderTraversal() {
 		Assert.assertEquals("4 5 2 3 1 ", tree.postOrderTraversal(tree.getRoot()));
 	}
+	
+	@Test
+	public void testHeight(){
+		Assert.assertEquals(3, tree.height(tree.getRoot()));
+	}
 
 }
