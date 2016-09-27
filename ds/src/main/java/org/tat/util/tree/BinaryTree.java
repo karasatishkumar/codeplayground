@@ -1,5 +1,6 @@
 package org.tat.util.tree;
 
+import org.tat.util.LinkedListQueue;
 import org.tat.util.SinglyLinkedList;
 
 public class BinaryTree<T extends Object> {
@@ -20,10 +21,12 @@ public class BinaryTree<T extends Object> {
 		org.tat.util.Node<Node<T>> element = new org.tat.util.Node<Node<T>>(
 				root);
 		String left = this.inOrderTraversal(root.getLeft());
-		if(left != null) ret.append(left);
+		if (left != null)
+			ret.append(left);
 		ret.append(root.getData() + " ");
 		String right = this.inOrderTraversal(root.getRight());
-		if(right != null) ret.append(right);
+		if (right != null)
+			ret.append(right);
 		return ret.toString();
 	}
 
@@ -35,9 +38,11 @@ public class BinaryTree<T extends Object> {
 				root);
 		ret.append(root.getData() + " ");
 		String left = this.preOrderTraversal(root.getLeft());
-		if(left != null) ret.append(left);
+		if (left != null)
+			ret.append(left);
 		String right = this.preOrderTraversal(root.getRight());
-		if(right != null) ret.append(right);
+		if (right != null)
+			ret.append(right);
 		return ret.toString();
 	}
 
@@ -48,9 +53,11 @@ public class BinaryTree<T extends Object> {
 		org.tat.util.Node<Node<T>> element = new org.tat.util.Node<Node<T>>(
 				root);
 		String left = this.postOrderTraversal(root.getLeft());
-		if(left != null) ret.append(left);
+		if (left != null)
+			ret.append(left);
 		String right = this.postOrderTraversal(root.getRight());
-		if(right != null) ret.append(right);
+		if (right != null)
+			ret.append(right);
 		ret.append(root.getData() + " ");
 		return ret.toString();
 	}
@@ -62,36 +69,58 @@ public class BinaryTree<T extends Object> {
 	public void setRoot(Node<T> root) {
 		this.root = root;
 	}
-	
-	public int height(Node<T> root){
-		if(root == null)
+
+	public int height(Node<T> root) {
+		if (root == null)
 			return 0;
 		int lheight = height(root.getLeft());
 		int rheight = height(root.getRight());
-		if(lheight > rheight)
-			return lheight+1;
+		if (lheight > rheight)
+			return lheight + 1;
 		else
-			return rheight+1;
+			return rheight + 1;
 	}
-	
-	public String levelOrderTraversal(){
+
+	public String levelOrderTraversal() {
 		String ret = "";
-		for(int i = 0 ; i <= this.height(root) ; i++){
+		for (int i = 0; i <= this.height(root); i++) {
 			ret += this.getGivenLevelNodes(root, i);
 		}
 		return ret;
 	}
-	
-	private String getGivenLevelNodes(Node<T> node, int level){
-		if(node == null){
+
+	private String getGivenLevelNodes(Node<T> node, int level) {
+		if (node == null) {
 			return "";
 		}
 		String ret = "";
-		if(level == 1){
+		if (level == 1) {
 			return node.getData().toString() + " ";
-		}else{
-			ret += this.getGivenLevelNodes(node.getLeft(), level-1);
-			ret += this.getGivenLevelNodes(node.getRight(), level-1);
+		} else {
+			ret += this.getGivenLevelNodes(node.getLeft(), level - 1);
+			ret += this.getGivenLevelNodes(node.getRight(), level - 1);
+		}
+		return ret;
+	}
+
+	public String levelOrderTraversalWithQueue() {
+		LinkedListQueue<Node> queue = new LinkedListQueue<Node>();
+		String ret = "";
+		queue.enqueue(root);
+		while (queue.front() != null) {
+
+			Node tempNode = queue.dequeue();
+			ret += tempNode.getData().toString() + " ";
+
+			/* Enqueue left child */
+			if (tempNode.getLeft() != null) {
+				queue.enqueue(tempNode.getLeft());
+			}
+
+			/* Enqueue right child */
+			if (tempNode.getRight() != null) {
+				queue.enqueue(tempNode.getRight());
+			}
 		}
 		return ret;
 	}

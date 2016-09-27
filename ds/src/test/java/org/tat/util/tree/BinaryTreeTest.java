@@ -48,5 +48,10 @@ public class BinaryTreeTest {
 	public void testLevelOrderTraversal(){
 		Assert.assertEquals("1 2 3 4 5 ", tree.levelOrderTraversal());
 	}
+	
+	@Test
+	public void testLevelOrderTraversalWithQueue(){
+		Assert.assertEquals("1 2 3 4 5 ", tree.levelOrderTraversalWithQueue());
+	}
 
 }

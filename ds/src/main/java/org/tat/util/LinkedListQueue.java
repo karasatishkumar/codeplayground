@@ -27,7 +27,7 @@ public class LinkedListQueue<T extends Object> {
 	}
 
 	public T front() {
-		return (T) this.store.getHead().getData();
+		return this.store.getHead() == null ?  null : (T)this.store.getHead().getData();
 	}
 
 	@Override
