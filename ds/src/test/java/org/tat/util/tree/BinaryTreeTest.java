@@ -43,5 +43,10 @@ public class BinaryTreeTest {
 	public void testHeight(){
 		Assert.assertEquals(3, tree.height(tree.getRoot()));
 	}
+	
+	@Test
+	public void testLevelOrderTraversal(){
+		Assert.assertEquals("1 2 3 4 5 ", tree.levelOrderTraversal());
+	}
 
 }

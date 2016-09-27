@@ -73,4 +73,26 @@ public class BinaryTree<T extends Object> {
 		else
 			return rheight+1;
 	}
+	
+	public String levelOrderTraversal(){
+		String ret = "";
+		for(int i = 0 ; i <= this.height(root) ; i++){
+			ret += this.getGivenLevelNodes(root, i);
+		}
+		return ret;
+	}
+	
+	private String getGivenLevelNodes(Node<T> node, int level){
+		if(node == null){
+			return "";
+		}
+		String ret = "";
+		if(level == 1){
+			return node.getData().toString() + " ";
+		}else{
+			ret += this.getGivenLevelNodes(node.getLeft(), level-1);
+			ret += this.getGivenLevelNodes(node.getRight(), level-1);
+		}
+		return ret;
+	}
 }
