@@ -83,7 +83,7 @@ public class BinaryTree<T extends Object> {
 
 	public String levelOrderTraversal() {
 		String ret = "";
-		for (int i = 0; i <= this.height(root); i++) {
+		for (int i = 1; i <= this.height(root); i++) {
 			ret += this.getGivenLevelNodes(root, i);
 		}
 		return ret;
@@ -123,5 +123,18 @@ public class BinaryTree<T extends Object> {
 			}
 		}
 		return ret;
+	}
+	
+	public int diameterON2(Node<T> root){
+		if(root == null)
+			return 0;
+		
+		int lHeight = this.height(root.getLeft());
+		int rHeight = this.height(root.getRight());
+		
+		int lDia = this.diameterON2(root.getLeft());
+		int rDia = this.diameterON2(root.getRight());
+		
+		return Math.max(lHeight + rHeight + 1, Math.max(lDia, rDia));
 	}
 }

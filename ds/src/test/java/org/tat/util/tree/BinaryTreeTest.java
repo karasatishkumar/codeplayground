@@ -53,5 +53,10 @@ public class BinaryTreeTest {
 	public void testLevelOrderTraversalWithQueue(){
 		Assert.assertEquals("1 2 3 4 5 ", tree.levelOrderTraversalWithQueue());
 	}
+	
+	@Test
+	public void testDiameterON2(){
+		Assert.assertEquals(4, tree.diameterON2(tree.getRoot()));
+	}
 
 }
