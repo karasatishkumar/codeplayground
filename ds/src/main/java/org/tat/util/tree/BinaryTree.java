@@ -149,4 +149,21 @@ public class BinaryTree<T extends Object & Comparable> {
 			return this.search(root.getLeft(), t);
 			
 	}
+	
+	public Node<T> insert(Node<T> root, T t){
+		if(root == null){
+			root = new Node<T>(t);
+			return root;
+		}
+		if(root.getData().compareTo(t) == 0){
+			throw new RuntimeException("Duplicate Not applowed");
+		}
+		if(root.getData().compareTo(t) < 0)
+			root.setRight(this.insert(root.getRight(), t));
+		else
+			root.setLeft(this.insert(root.getLeft(), t));
+		
+		return root;
+			
+	}
 }

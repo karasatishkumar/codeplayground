@@ -72,5 +72,29 @@ public class BinaryTreeTest {
 		Node<Integer> node= tree.search(tree.getRoot(), 7);
 		Assert.assertEquals(7, (int)node.getData());
 	}
+	
+	@Test
+	public void testInsert() {
+		tree = new BinaryTree<Integer>();
+		tree.setRoot(new Node(6));
+		tree.getRoot().setLeft(new Node(4));
+		tree.getRoot().setRight(new Node(8));
+		tree.getRoot().getLeft().setLeft(new Node(3));
+		tree.getRoot().getLeft().setRight(new Node(5));
+		Node<Integer> node= tree.insert(tree.getRoot(), 7);
+		Assert.assertEquals("3 4 5 6 7 8 ", tree.inOrderTraversal(tree.getRoot()));
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testInsertExp() {
+		tree = new BinaryTree<Integer>();
+		tree.setRoot(new Node(6));
+		tree.getRoot().setLeft(new Node(4));
+		tree.getRoot().setRight(new Node(8));
+		tree.getRoot().getLeft().setLeft(new Node(3));
+		tree.getRoot().getLeft().setRight(new Node(5));
+		Node<Integer> node= tree.insert(tree.getRoot(), 5);
+		Assert.assertEquals("3 4 5 6 7 8 ", tree.inOrderTraversal(tree.getRoot()));
+	}
 
 }
