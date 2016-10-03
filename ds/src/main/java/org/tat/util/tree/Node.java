@@ -1,6 +1,6 @@
 package org.tat.util.tree;
 
-public class Node<T extends Object> {
+public class Node<T extends Object & Comparable>{
 	private T data;
 	private Node<T> left;
 	private Node<T> right;
@@ -34,5 +34,6 @@ public class Node<T extends Object> {
 	public void setRight(Node<T> right) {
 		this.right = right;
 	}
+
 
 }

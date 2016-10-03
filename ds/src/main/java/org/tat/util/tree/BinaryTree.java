@@ -1,9 +1,8 @@
 package org.tat.util.tree;
 
 import org.tat.util.LinkedListQueue;
-import org.tat.util.SinglyLinkedList;
 
-public class BinaryTree<T extends Object> {
+public class BinaryTree<T extends Object & Comparable> {
 	private Node<T> root;
 
 	public BinaryTree() {
@@ -136,5 +135,18 @@ public class BinaryTree<T extends Object> {
 		int rDia = this.diameterON2(root.getRight());
 		
 		return Math.max(lHeight + rHeight + 1, Math.max(lDia, rDia));
+	}
+	
+	public Node<T> search(Node<T> root, T t){
+		if(root == null)
+			return null;
+		if(root.getData().compareTo(t) == 0){
+			return root;
+		}
+		if(root.getData().compareTo(t) < 0)
+			return this.search(root.getRight(), t);
+		else
+			return this.search(root.getLeft(), t);
+			
 	}
 }
