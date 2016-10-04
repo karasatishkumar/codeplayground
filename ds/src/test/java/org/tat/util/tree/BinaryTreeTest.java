@@ -81,7 +81,7 @@ public class BinaryTreeTest {
 		tree.getRoot().setRight(new Node(8));
 		tree.getRoot().getLeft().setLeft(new Node(3));
 		tree.getRoot().getLeft().setRight(new Node(5));
-		Node<Integer> node= tree.insert(tree.getRoot(), 7);
+		tree.insert(7);
 		Assert.assertEquals("3 4 5 6 7 8 ", tree.inOrderTraversal(tree.getRoot()));
 	}
 	
@@ -93,8 +93,29 @@ public class BinaryTreeTest {
 		tree.getRoot().setRight(new Node(8));
 		tree.getRoot().getLeft().setLeft(new Node(3));
 		tree.getRoot().getLeft().setRight(new Node(5));
-		Node<Integer> node= tree.insert(tree.getRoot(), 5);
+		tree.insert( 5);
 		Assert.assertEquals("3 4 5 6 7 8 ", tree.inOrderTraversal(tree.getRoot()));
 	}
-
+	
+	@Test
+	public void testDelete() {
+		tree = new BinaryTree<Integer>();
+		tree.insert(50);
+		tree.insert(30);
+		tree.insert(20);
+		tree.insert(40);
+		tree.insert(70);
+		tree.insert(60);
+		tree.insert(80);
+		System.out.println(tree.inOrderTraversal(tree.getRoot()));
+		tree.delete(20);
+		System.out.println(tree.inOrderTraversal(tree.getRoot()));
+		Assert.assertEquals("30 40 50 60 70 80 ", tree.inOrderTraversal(tree.getRoot()));
+		tree.delete(30);
+		System.out.println(tree.inOrderTraversal(tree.getRoot()));
+		Assert.assertEquals("40 50 60 70 80 ", tree.inOrderTraversal(tree.getRoot()));
+		tree.delete(50);
+		System.out.println(tree.inOrderTraversal(tree.getRoot()));
+		Assert.assertEquals("40 60 70 80 ", tree.inOrderTraversal(tree.getRoot()));
+	}
 }

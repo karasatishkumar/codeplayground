@@ -1,5 +1,6 @@
 package org.tat.util.tree;
 
+import org.omg.CosNaming.NamingContextPackage.NotEmpty;
 import org.tat.util.LinkedListQueue;
 
 public class BinaryTree<T extends Object & Comparable> {
@@ -150,7 +151,11 @@ public class BinaryTree<T extends Object & Comparable> {
 			
 	}
 	
-	public Node<T> insert(Node<T> root, T t){
+	public void insert(T t){
+		this.root = this.insertRec(this.root, t);
+	}
+	
+	private Node<T> insertRec(Node<T> root, T t){
 		if(root == null){
 			root = new Node<T>(t);
 			return root;
@@ -159,11 +164,51 @@ public class BinaryTree<T extends Object & Comparable> {
 			throw new RuntimeException("Duplicate Not applowed");
 		}
 		if(root.getData().compareTo(t) < 0)
-			root.setRight(this.insert(root.getRight(), t));
+			root.setRight(this.insertRec(root.getRight(), t));
 		else
-			root.setLeft(this.insert(root.getLeft(), t));
+			root.setLeft(this.insertRec(root.getLeft(), t));
 		
 		return root;
 			
+	}
+	
+	public Node<T> delete(T t){
+		return this.deleteRec(this.root, t);
+	}
+	
+	private Node<T> deleteRec(Node<T> root, T t){
+		if(root == null){
+			return null;
+		}
+		else if(root.getData().compareTo(t) < 0){
+			root.setRight(this.deleteRec(root.getRight(), t));
+		}else if(root.getData().compareTo(t) > 0){
+			root.setLeft(this.deleteRec(root.getLeft(), t));
+		}else{
+			if(root.getLeft() == null){
+				root = root.getRight();
+			}else if(root.getRight() == null){
+				root = root.getLeft();
+			}else{
+				Node<T> min = findMin(root.getRight());
+				root.setData(min.getData());
+				root.setRight(this.deleteRec(root.getRight(), min.getData()));
+			}
+			
+		}
+		return root;
+	}
+	
+	private Node<T> findMin(Node<T> root){
+		Node<T> min = null;
+		if(root == null){
+			return null;
+		}
+		
+		while(root.getLeft() != null){
+			root = root.getLeft();
+		}
+		
+		return root;
 	}
 }

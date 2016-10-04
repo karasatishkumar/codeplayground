@@ -35,5 +35,7 @@ public class Node<T extends Object & Comparable>{
 		this.right = right;
 	}
 
-
+	public void setData(T data) {
+		this.data = data;
+	}
 }
