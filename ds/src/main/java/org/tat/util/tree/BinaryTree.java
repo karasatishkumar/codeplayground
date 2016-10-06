@@ -211,4 +211,20 @@ public class BinaryTree<T extends Object & Comparable> {
 		
 		return root;
 	}
+	
+	private Node<T> prev = null;
+	public boolean isBST(Node<T> root){
+		if(root == null){
+			return true;
+		}
+		if(!this.isBST(root.getLeft()))
+			return false;
+		if(prev != null && root.getData().compareTo(prev.getData()) <= 0){
+			return false;
+		}else{
+			prev = root;
+		}
+		return this.isBST(root.getRight());
+	}
+	
 }

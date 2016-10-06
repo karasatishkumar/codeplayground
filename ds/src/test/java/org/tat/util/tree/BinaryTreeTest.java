@@ -1,7 +1,5 @@
 package org.tat.util.tree;
 
-import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -107,15 +105,44 @@ public class BinaryTreeTest {
 		tree.insert(70);
 		tree.insert(60);
 		tree.insert(80);
-		System.out.println(tree.inOrderTraversal(tree.getRoot()));
 		tree.delete(20);
-		System.out.println(tree.inOrderTraversal(tree.getRoot()));
 		Assert.assertEquals("30 40 50 60 70 80 ", tree.inOrderTraversal(tree.getRoot()));
 		tree.delete(30);
-		System.out.println(tree.inOrderTraversal(tree.getRoot()));
 		Assert.assertEquals("40 50 60 70 80 ", tree.inOrderTraversal(tree.getRoot()));
 		tree.delete(50);
-		System.out.println(tree.inOrderTraversal(tree.getRoot()));
 		Assert.assertEquals("40 60 70 80 ", tree.inOrderTraversal(tree.getRoot()));
+	}
+	
+	@Test
+	public void testIsBST(){
+		tree = new BinaryTree<Integer>();
+		tree.insert(50);
+		tree.insert(30);
+		tree.insert(20);
+		tree.insert(40);
+		tree.insert(70);
+		tree.insert(60);
+		tree.insert(80);
+		Assert.assertTrue(tree.isBST(tree.getRoot()));
+	}
+	
+	@Test
+	public void testIsBSTNegetive(){
+		Assert.assertFalse(tree.isBST(tree.getRoot()));
+	}
+	
+	@Test
+	public void testIsBSTNegetive1(){
+		tree = new BinaryTree<Integer>();
+		tree.setRoot(new Node(6));
+		tree.getRoot().setLeft(new Node(2));
+		tree.getRoot().getLeft().setLeft(new Node(1));
+		tree.getRoot().getLeft().setRight(new Node(3));
+		tree.getRoot().getLeft().getRight().setRight(new Node(7));
+		
+		tree.getRoot().setRight(new Node(12));
+		tree.getRoot().getRight().setLeft(new Node(8));
+		tree.getRoot().getRight().setRight(new Node(13));
+		Assert.assertFalse(tree.isBST(tree.getRoot()));
 	}
 }
