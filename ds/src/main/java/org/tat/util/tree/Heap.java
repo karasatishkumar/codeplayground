@@ -27,21 +27,44 @@ public class Heap<T extends Object & Comparable> {
 	}
 
 	private void heapify(int i, Operation operation) {
-		if (this.type == Type.MIN) {
-			while (i != 0 && ((T) store[getParent(i)]).compareTo((T) store[i]) > 0) {
-				this.swap(i, getParent(i));
-				i = getParent(i);
+		if (operation == Operation.INSERT) {
+			if (this.type == Type.MIN) {
+				while (i != 0 && ((T) store[getParent(i)]).compareTo((T) store[i]) > 0) {
+					this.swap(i, getParent(i));
+					i = getParent(i);
+				}
+			} else {
+				while (i != 0 && ((T) store[getParent(i)]).compareTo((T) store[i]) < 0) {
+					this.swap(i, getParent(i));
+					i = getParent(i);
+				}
 			}
 		} else {
-			while (i != 0 && ((T) store[getParent(i)]).compareTo((T) store[i]) < 0) {
-				this.swap(i, getParent(i));
-				i = getParent(i);
+			if (this.type == Type.MIN) {
+				while (i != this.index) {
+					
+					this.swap(i, getParent(i));
+					i = getParent(i);
+				}
+			} else {
+				while (i != 0 && ((T) store[getParent(i)]).compareTo((T) store[i]) < 0) {
+					this.swap(i, getParent(i));
+					i = getParent(i);
+				}
 			}
 		}
 	}
 
 	private int getParent(int child) {
 		return (child - 1) / 2;
+	}
+
+	private int getLeft(int parent) {
+		return 2 * parent + 1;
+	}
+
+	private int getRight(int parent) {
+		return 2 * parent + 2;
 	}
 
 	private void swap(int i, int j) {
@@ -51,6 +74,16 @@ public class Heap<T extends Object & Comparable> {
 	}
 
 	public void delete(T key) {
+		int i = 0;
+		while (i >= this.index) {
+			if (((T) store[i]).compareTo(key) == 0) {
+				this.swap(i, this.index);
+				store[index--] = null;
+				break;
+			}
+			i++;
+		}
+		this.heapify(i, Operation.DELETE);
 
 	}
 
