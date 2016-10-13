@@ -41,15 +41,38 @@ public class Heap<T extends Object & Comparable> {
 			}
 		} else {
 			if (this.type == Type.MIN) {
-				while (i != this.index) {
-					
-					this.swap(i, getParent(i));
-					i = getParent(i);
+				while (2*i+2 <= this.index) {
+					T min = (T) this.store[i];
+					T left = (T) this.store[this.getLeft(i)];
+					T right = (T) this.store[this.getRight(i)];
+					if (left.compareTo(right) < 0) {
+						if (left.compareTo(min) < 0) {
+							this.swap(i, this.getLeft(i));
+							i = this.getLeft(i);
+						}
+					} else {
+						if (right.compareTo(min) < 0) {
+							this.swap(i, this.getLeft(i));
+							i = this.getRight(i);
+						}
+					}
 				}
 			} else {
-				while (i != 0 && ((T) store[getParent(i)]).compareTo((T) store[i]) < 0) {
-					this.swap(i, getParent(i));
-					i = getParent(i);
+				while (2*i+2 <= this.index) {
+					T min = (T) this.store[i];
+					T left = (T) this.store[this.getLeft(i)];
+					T right = (T) this.store[this.getRight(i)];
+					if (left.compareTo(right) > 0) {
+						if (left.compareTo(min) > 0) {
+							this.swap(i, this.getLeft(i));
+							i = this.getLeft(i);
+						}
+					} else {
+						if (right.compareTo(min) > 0) {
+							this.swap(i, this.getLeft(i));
+							i = this.getRight(i);
+						}
+					}
 				}
 			}
 		}
@@ -74,8 +97,10 @@ public class Heap<T extends Object & Comparable> {
 	}
 
 	public void delete(T key) {
+		if (index == -1)
+			throw new RuntimeException("Nothing in heap");
 		int i = 0;
-		while (i >= this.index) {
+		while (i<= this.index) {
 			if (((T) store[i]).compareTo(key) == 0) {
 				this.swap(i, this.index);
 				store[index--] = null;

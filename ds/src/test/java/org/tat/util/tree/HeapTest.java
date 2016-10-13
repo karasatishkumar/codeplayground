@@ -120,9 +120,58 @@ public class HeapTest {
 		Assert.assertEquals(heap.getStore(), new Object[]{10, 9, 8, 6, 7, 3, 5, 1, 2, 4});
 	}
 
-	//@Test
-	public void testDelete() {
-		fail("Not yet implemented");
+	@Test(expected = RuntimeException.class)
+	public void testDeleteExp() {
+		heap = new Heap<>(Type.MIN);
+		heap.delete(5);
+	}
+	
+	@Test
+	public void testDelete1() {
+		heap = new Heap<>(Type.MIN);
+		heap.insert(1);
+		heap.insert(2);
+		heap.insert(3);
+		heap.insert(4);
+		heap.insert(5);
+		heap.delete(5);
+		Assert.assertEquals(heap.getStore(), new Object[]{1, 2, 3, 4, null, null, null, null, null, null});
+	}
+	
+	@Test
+	public void testDelete2() {
+		heap = new Heap<>(Type.MIN);
+		heap.insert(1);
+		heap.insert(2);
+		heap.insert(3);
+		heap.insert(4);
+		heap.insert(5);
+		heap.delete(1);
+		Assert.assertEquals(heap.getStore(), new Object[]{2, 5, 3, 4, null, null, null, null, null, null});
+	}
+	
+	@Test
+	public void testDelete3() {
+		heap = new Heap<>(Type.MAX);
+		heap.insert(1);
+		heap.insert(2);
+		heap.insert(3);
+		heap.insert(4);
+		heap.insert(5);
+		heap.delete(5);
+		Assert.assertEquals(heap.getStore(), new Object[]{4, 3, 2, 1, null, null, null, null, null, null});
+	}
+	
+	@Test
+	public void testDelete4() {
+		heap = new Heap<>(Type.MAX);
+		heap.insert(1);
+		heap.insert(2);
+		heap.insert(3);
+		heap.insert(4);
+		heap.insert(5);
+		heap.delete(1);
+		Assert.assertEquals(heap.getStore(), new Object[]{ 5, 4, 2, 3, null, null, null, null, null, null});
 	}
 
 }
