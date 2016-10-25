@@ -1,6 +1,5 @@
 package org.tat.util.tree;
 
-import org.omg.CosNaming.NamingContextPackage.NotEmpty;
 import org.tat.util.LinkedListQueue;
 
 public class BinaryTree<T extends Object & Comparable> {
