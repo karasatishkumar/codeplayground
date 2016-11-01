@@ -115,7 +115,7 @@ public class Heap<T extends Object & Comparable> {
 	public Object[] getStore() {
 		return store;
 	}
-
+	
 	public Type getType() {
 		return type;
 	}
