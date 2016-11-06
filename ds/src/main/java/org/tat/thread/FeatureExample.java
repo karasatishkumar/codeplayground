@@ -37,19 +37,27 @@ public class FeatureExample {
 			Future<Integer> task = es.submit(new Generator("Thead : " + i));
 			list.add(task);
 		}
-
-		for (Future<Integer> future : list) {
-			try {
-				System.out.println("Result : " + future.get());
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		int i = 0;
+		while (i < 10) {
+			for (Future<Integer> future : list) {
+				try {
+					if(future.isDone()){
+						i++;
+						System.out.println("Result : " + future.get());
+					}
+					else{
+						System.out.println("Not Yet completed");
+						Thread.sleep(100);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
-
 		es.shutdown();
 
 	}
