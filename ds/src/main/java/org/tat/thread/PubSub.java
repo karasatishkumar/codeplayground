@@ -51,6 +51,46 @@ public class PubSub {
 		
 		t1.start();
 		t2.start();
+		
+		for (int i = 0; i < 10; i++) {
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					try {
+						while (true) {
+							Thread.sleep(500);
+							System.out.println("Inserting an element");
+							bQueue.put(random.nextInt(100));
+						}
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+			}).start();
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					try {
+						while (true) {
+							Thread.sleep(500);
+							System.out.println("Removed Item : "
+									+ bQueue.take());
+						}
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+			}).start();
+		}
+		
 
 	}
 
