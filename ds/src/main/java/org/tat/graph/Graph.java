@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 public class Graph {
 	private int size;
-	private LinkedList<Integer> adj[];
+	private LinkedList<Integer> adj[];//List<List<Integer>>
 
 	public Graph(int size) {
 		this.size = size;
